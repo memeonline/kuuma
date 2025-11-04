@@ -1,14 +1,18 @@
 # Kuuma - Coming Soon Page
 
-Premium Sauna Wear brand landing page with heat-themed design.
+Premium Sauna Wear brand landing page with intense heat and sauna-themed animations.
 
 ## 🔥 Features
 
-- Animated heat waves and particle effects
-- Email signup form for launch notifications
-- Fully responsive design
-- Modern UI with smooth animations
-- Social media integration
+- **Animated gradient background** - Continuously shifting heat colors (red, orange, yellow)
+- **Rising steam particles** - 20+ floating steam clouds mimicking sauna steam
+- **Glowing ember particles** - Hot glowing particles floating upward
+- **Floating flame emojis** - Animated fire emojis with rotation
+- **Heat distortion waves** - Layered heat wave effects
+- **Mouse parallax effects** - Interactive elements that respond to mouse movement
+- **Dynamic particle generation** - Continuous creation of new particles via JavaScript
+- **Pulsing text effects** - "Things Are Warming Up..." with glowing animation
+- Fully responsive design for all devices
 
 ## 🚀 Deploy to Vercel
 
@@ -54,29 +58,32 @@ kuuma/
 ## 🎨 Customization
 
 ### Colors
-Edit the CSS variables in `styles.css`:
+Edit the gradient colors in `styles.css` in the body section:
 ```css
-:root {
-    --flame-orange: #FF6B35;
-    --hot-red: #E63946;
-    --deep-red: #A4161A;
-    --warm-yellow: #FFB703;
-    --ember-glow: #FB8500;
-}
+background: linear-gradient(45deg, 
+    #FF0000,    /* Red */
+    #FF4500,    /* Orange-red */
+    #FF6B00,    /* Orange */
+    #FF8C00,    /* Dark orange */
+    #FFA500,    /* Orange */
+    #FFB700,    /* Amber */
+    #FFC300,    /* Gold */
+    #FFD700     /* Golden yellow */
+);
 ```
 
-### Email Integration
-To connect the email form to a real backend, update the form submission in `script.js`:
-```javascript
-fetch('/api/subscribe', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email: email })
-});
+### Text Content
+Change the main heading text in `index.html`:
+```html
+<h1 class="main-heading">Things Are Warming Up...</h1>
 ```
 
-### Social Media Links
-Update the social media links in `index.html` by replacing the `#` in the `href` attributes with your actual social media URLs.
+### Animation Speed
+Adjust animation durations in `styles.css`:
+- Background gradient: `animation: heatGradient 15s ease infinite;` (line 30)
+- Steam particles: `animation: steamRise 12s ease-in-out infinite;` (line 146)
+- Ember particles: `animation: emberFloat 8s ease-in-out infinite;` (line 207)
+- Flame emojis: `animation: flameFloat 15s ease-in-out infinite;` (line 255)
 
 ## 📱 Browser Support
 

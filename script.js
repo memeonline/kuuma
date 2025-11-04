@@ -1,118 +1,80 @@
-// Email signup form handling
-document.getElementById('signupForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const emailInput = document.getElementById('emailInput');
-    const successMessage = document.getElementById('successMessage');
-    const email = emailInput.value.trim();
-    
-    // Basic email validation
-    if (email && validateEmail(email)) {
-        // Show success message
-        successMessage.classList.add('show');
-        
-        // Clear the input
-        emailInput.value = '';
-        
-        // Hide success message after 5 seconds
-        setTimeout(() => {
-            successMessage.classList.remove('show');
-        }, 5000);
-        
-        // Here you would typically send the email to your backend
-        console.log('Email submitted:', email);
-        
-        // Example: Send to backend
-        // fetch('/api/subscribe', {
-        //     method: 'POST',
-        //     headers: { 'Content-Type': 'application/json' },
-        //     body: JSON.stringify({ email: email })
-        // });
-    }
-});
-
-// Email validation function
-function validateEmail(email) {
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return re.test(email);
-}
-
-// Add parallax effect to heat waves on mouse move
-document.addEventListener('mousemove', (e) => {
-    const mouseX = e.clientX / window.innerWidth;
-    const mouseY = e.clientY / window.innerHeight;
-    
-    const waves = document.querySelectorAll('.heat-wave');
-    waves.forEach((wave, index) => {
-        const speed = (index + 1) * 10;
-        const x = (mouseX * speed) - (speed / 2);
-        const y = (mouseY * speed) - (speed / 2);
-        
-        wave.style.transform = `translate(${x}px, ${y}px)`;
-    });
-});
-
-// Add smooth scroll behavior
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }
-    });
-});
-
 // Add loading animation
 window.addEventListener('load', () => {
     document.body.style.opacity = '0';
     setTimeout(() => {
-        document.body.style.transition = 'opacity 0.5s ease-in-out';
+        document.body.style.transition = 'opacity 1s ease-in-out';
         document.body.style.opacity = '1';
     }, 100);
 });
 
-// Create additional dynamic heat particles
-function createHeatParticle() {
-    const particle = document.createElement('div');
-    particle.classList.add('particle');
+// Create additional random steam particles dynamically
+function createSteamParticle() {
+    const steamContainer = document.querySelector('.steam-container');
+    const steam = document.createElement('div');
+    steam.className = 'steam';
     
-    const size = Math.random() * 5 + 3;
-    particle.style.width = `${size}px`;
-    particle.style.height = `${size}px`;
-    particle.style.left = `${Math.random() * 100}%`;
-    particle.style.animationDuration = `${Math.random() * 10 + 10}s`;
-    particle.style.animationDelay = `${Math.random() * 5}s`;
+    const size = Math.random() * 50 + 60; // 60-110px
+    steam.style.width = `${size}px`;
+    steam.style.height = `${size}px`;
+    steam.style.left = `${Math.random() * 100}%`;
+    steam.style.animationDuration = `${Math.random() * 6 + 10}s`; // 10-16s
+    steam.style.animationDelay = `${Math.random() * 5}s`;
     
-    document.querySelector('.particles').appendChild(particle);
+    steamContainer.appendChild(steam);
     
-    // Remove particle after animation
+    // Remove after animation completes
     setTimeout(() => {
-        particle.remove();
+        steam.remove();
     }, 20000);
 }
 
-// Add new particles periodically
-setInterval(createHeatParticle, 3000);
+// Create additional random ember particles dynamically
+function createEmberParticle() {
+    const emberContainer = document.querySelector('.ember-container');
+    const ember = document.createElement('div');
+    ember.className = 'ember';
+    
+    const size = Math.random() * 4 + 3; // 3-7px
+    ember.style.width = `${size}px`;
+    ember.style.height = `${size}px`;
+    ember.style.left = `${Math.random() * 100}%`;
+    ember.style.animationDuration = `${Math.random() * 6 + 6}s`; // 6-12s
+    ember.style.animationDelay = `${Math.random() * 3}s`;
+    
+    emberContainer.appendChild(ember);
+    
+    // Remove after animation completes
+    setTimeout(() => {
+        ember.remove();
+    }, 15000);
+}
 
-// Add hover effect to info cards
-const infoCards = document.querySelectorAll('.info-card');
-infoCards.forEach(card => {
-    card.addEventListener('mouseenter', function() {
-        this.style.transition = 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+// Periodically create new particles
+setInterval(createSteamParticle, 2000);
+setInterval(createEmberParticle, 1500);
+
+// Create initial burst of particles
+for (let i = 0; i < 5; i++) {
+    setTimeout(createSteamParticle, i * 500);
+    setTimeout(createEmberParticle, i * 300);
+}
+
+// Mouse move parallax effect
+document.addEventListener('mousemove', (e) => {
+    const mouseX = e.clientX / window.innerWidth - 0.5;
+    const mouseY = e.clientY / window.innerHeight - 0.5;
+    
+    // Move heat waves based on mouse position
+    const heatWaves = document.querySelectorAll('.heat-wave');
+    heatWaves.forEach((wave, index) => {
+        const speed = (index + 1) * 15;
+        wave.style.transform = `translate(${mouseX * speed}px, ${mouseY * speed}px)`;
     });
+    
+    // Move brand name slightly for parallax effect
+    const brandName = document.querySelector('.brand-name');
+    if (brandName) {
+        brandName.style.transform = `translate(${mouseX * 15}px, ${mouseY * 15}px)`;
+        brandName.style.transition = 'transform 0.3s ease-out';
+    }
 });
-
-// Add input focus effects
-const emailInput = document.getElementById('emailInput');
-emailInput.addEventListener('focus', () => {
-    emailInput.parentElement.style.transform = 'scale(1.02)';
-});
-
-emailInput.addEventListener('blur', () => {
-    emailInput.parentElement.style.transform = 'scale(1)';
-});
-
